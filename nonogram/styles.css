@@ -1,0 +1,569 @@
+/* ==================== 全域設定 ==================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    background: #fff;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 10px;
+    overflow-x: hidden;
+}
+
+/* ==================== 主容器 ==================== */
+#app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+@media (max-width: 1023px) {
+    #app-container {
+        max-width: 90%;
+    }
+}
+
+/* ==================== 標題 ==================== */
+h1 {
+    font-size: 48px;
+    color: #1C1C1E;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* ====================遊戲設定區域 ==================== */
+#game-settings {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ==================== 格子大小選擇 ==================== */
+#grid-size-select {
+    padding: 12px 24px;
+    font-size: 18px;
+    border: 2px solid #C6C6C8;
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1C1C1E;
+    min-width: 120px;
+}
+
+#grid-size-select:focus {
+    outline: none;
+    border-color: #007AFF;
+}
+
+/* ==================== 難度選擇 ==================== */
+#difficulty-select {
+    padding: 12px 24px;
+    font-size: 18px;
+    border: 2px solid #C6C6C8;
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1C1C1E;
+    min-width: 150px;
+}
+
+#difficulty-select:focus {
+    outline: none;
+    border-color: #007AFF;
+}
+
+/* ==================== 愛心顯示 ==================== */
+#hearts-container {
+    /* 固定每行 10 顆愛心，20 顆時顯示為 2 行 */
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+    column-gap: 12px;
+    row-gap: 8px;
+    justify-content: center;
+}
+
+.heart {
+    font-size: 40px;
+    line-height: 1;
+}
+
+.heart.filled {
+    color: #FF3B30;
+}
+
+.heart.empty {
+    color: #D1D1D6;
+}
+
+/* ==================== 計時器 ==================== */
+#timer-display {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1C1C1E;
+    min-height: 28px;
+    text-align: center;
+}
+
+/* ==================== 成功訊息 ==================== */
+#success-message {
+    font-size: 24px;
+    font-weight: 700;
+    color: #34C759;
+    min-height: 30px;
+    text-align: center;
+}
+
+/* ==================== 遊戲畫布容器 ==================== */
+#game-container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: 10px;
+    row-gap: 6px;
+    align-items: flex-start;
+    justify-items: start;
+    width: 100%;
+    padding-right: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* ==================== 上方提示數字區域 ==================== */
+#top-hints {
+    display: grid;
+    gap: 0;
+    margin-bottom: 0;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: start;
+}
+
+.top-hint-col {
+    background-color: #E5E5EA;
+    padding: 4px 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    border: 1px solid #C6C6C8;
+    /* height 和 width 由 JavaScript 動態設定 */
+}
+
+.top-hint-col .hint-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1C1C1E;
+    line-height: 1;
+}
+
+/* ==================== 左側提示數字區域 ==================== */
+#left-hints {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 0;
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.left-hint-row {
+    background-color: #E5E5EA;
+    padding: 2px 2px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border: 1px solid #C6C6C8;
+    /* width 和 height 由 JavaScript 動態設定 */
+}
+
+.left-hint-row .hint-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1C1C1E;
+    margin-left: 3px;
+    margin-top: 2px;
+}
+
+/* ==================== 遊戲畫布 ==================== */
+#game-board {
+    display: grid;
+    gap: 0;
+    border: 3px solid #1C1C1E;
+    grid-column: 2;
+    grid-row: 2;
+    /* grid-template-columns 和 grid-template-rows 由 JavaScript 動態設定 */
+}
+
+.cell {
+    border: 1px solid #C6C6C8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #FFFFFF;
+    font-weight: 700;
+    transition: background-color 0.1s;
+    touch-action: none;
+    /* width, height 和 font-size 由 JavaScript 動態設定 */
+}
+
+.cell:hover {
+    background-color: #F2F2F7;
+}
+
+.cell.filled {
+    background-color: #1C1C1E;
+}
+
+.cell.marked {
+    color: #8E8E93;
+    background-color: #FFFFFF;
+}
+
+/* 每3格加粗邊框 */
+.cell.border-right {
+    border-right: 2px solid #1C1C1E;
+}
+
+.cell.border-bottom {
+    border-bottom: 2px solid #1C1C1E;
+}
+
+/* ==================== 模式切換按鈕 ==================== */
+#mode-buttons {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.mode-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 3px solid #C6C6C8;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 36px;
+    transition: all 0.2s;
+    color: #1C1C1E;
+}
+
+.mode-btn:hover {
+    transform: scale(1.05);
+}
+
+.mode-btn.active {
+    border-color: #007AFF;
+    background-color: #E3F2FF;
+}
+
+/* ==================== 功能按鈕 ==================== */
+#action-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#action-buttons button {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+
+.action-btn {
+    padding: 14px 32px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#show-answer-btn {
+    background-color: #8E44AD;
+    color: white;
+}
+
+#show-answer-btn:hover {
+    background-color: #9B59B6;
+}
+
+#new-game-btn {
+    background-color: #F39C12;
+    color: white;
+}
+
+#new-game-btn:hover {
+    background-color: #E67E22;
+}
+
+#share-btn {
+    background-color: #007AFF;
+    color: white;
+}
+
+#share-btn:hover {
+    background-color: #0051D5;
+}
+
+/* ==================== 彈窗 ==================== */
+#modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal-overlay.show {
+    display: flex;
+}
+
+/* 分享彈窗遮罩 */
+#share-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1001;
+    justify-content: center;
+    align-items: center;
+}
+
+#share-modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.modal h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #1C1C1E;
+    line-height: 1.4;
+}
+
+.modal p {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #1C1C1E;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.answer-btn {
+    background-color: #007AFF;
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 20px;
+}
+
+.answer-btn:hover {
+    background-color: #0051D5;
+    transform: scale(1.05);
+}
+
+/* ==================== 分享彈窗 ==================== */
+.share-modal {
+    max-width: 640px;
+}
+
+.share-url-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#share-url-input {
+    flex: 1;
+    border: 2px solid #C6C6C8;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    color: #1C1C1E;
+    background: #F7F7FA;
+}
+
+#copy-share-url-btn {
+    background-color: #007AFF;
+    color: white;
+    white-space: nowrap;
+}
+
+#copy-share-url-btn:hover {
+    background-color: #0051D5;
+}
+
+#close-share-modal-btn {
+    background-color: #8E8E93;
+    color: white;
+}
+
+#close-share-modal-btn:hover {
+    background-color: #6F6F74;
+}
+
+#share-copy-status {
+    min-height: 24px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* ==================== 響應式設計 ==================== */
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+    }
+
+    #app-container {
+        max-width: 100%;
+        padding: 15px 15px 15px 0;
+        gap: 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+        margin-bottom: 5px;
+    }
+
+    #game-settings {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    #grid-size-select,
+    #difficulty-select {
+        width: 100%;
+        max-width: 200px;
+        padding: 10px 16px;
+        font-size: 16px;
+    }
+
+    .heart {
+        font-size: 32px;
+    }
+
+    #hearts-container {
+        column-gap: 8px;
+        row-gap: 6px;
+    }
+
+    #timer-display {
+        font-size: 18px;
+    }
+
+    #success-message {
+        font-size: 18px;
+    }
+
+    #game-container {
+        transform-origin: top center;
+        max-width: 100%;
+    }
+
+    .mode-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 28px;
+    }
+
+    #mode-buttons {
+        gap: 20px;
+    }
+
+    .action-btn {
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+
+    #action-buttons {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .modal {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .share-url-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #share-url-input {
+        width: 100%;
+    }
+
+    .modal h2 {
+        font-size: 18px;
+    }
+
+    .answer-btn {
+        font-size: 20px;
+        padding: 16px;
+    }
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ji’s Baby Nonogram</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- 大標題 -->
+        <h1>Ji’s Baby Nonogram</h1>
+
+        <!-- 遊戲設定選擇 -->
+        <div id="game-settings">
+            <select id="grid-size-select">
+                <option value="9">9x9</option>
+                <option value="15" selected>15x15</option>
+            </select>
+            <select id="difficulty-select">
+                <option value="easy">簡單</option>
+                <option value="medium" selected>中等</option>
+                <option value="hard">困難</option>
+            </select>
+        </div>
+
+        <!-- 愛心顯示 -->
+        <div id="hearts-container"></div>
+
+        <!-- 計時器顯示（每秒更新） -->
+        <div id="timer-display">⏱️ 計時：00:00</div>
+
+        <!-- 成功訊息 -->
+        <div id="success-message"></div>
+
+        <!-- 遊戲區域 -->
+        <div id="game-container">
+            <!-- 上方提示 -->
+            <div id="top-hints"></div>
+
+            <!-- 左側提示 -->
+            <div id="left-hints"></div>
+
+            <!-- 遊戲畫布 -->
+            <div id="game-board"></div>
+        </div>
+
+        <!-- 模式切換按鈕 -->
+        <div id="mode-buttons">
+            <button class="mode-btn active" id="fill-btn" title="填滿模式">⏹︎</button>
+            <button class="mode-btn" id="mark-btn" title="標記模式">✖︎</button>
+        </div>
+
+        <!-- 功能按鈕 -->
+        <div id="action-buttons">
+            <button class="action-btn" id="show-answer-btn">直接看答案</button>
+            <button class="action-btn" id="new-game-btn">新遊戲</button>
+            <button class="action-btn" id="share-btn">分享</button>
+            <button onclick="window.location.href='../index.html'">回首頁</button>
+        </div>
+    </div>
+
+    <!-- 失敗彈窗 -->
+    <div id="modal-overlay">
+        <div class="modal">
+            <h2 id="challenge-title">挑戰失敗，請問要繼續挑戰嗎?</h2>
+            <p id="challenge-question"></p>
+            <div class="modal-buttons">
+                <button class="modal-btn answer-btn" id="answer-o-btn">O</button>
+                <button class="modal-btn answer-btn" id="answer-x-btn">X</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分享彈窗 -->
+    <div id="share-modal-overlay">
+        <div class="modal share-modal">
+            <h2>分享目前題目</h2>
+            <p>將下方網址分享給對方，即可用同一題目比賽</p>
+            <div class="share-url-row">
+                <input id="share-url-input" type="text" readonly>
+                <button class="modal-btn" id="copy-share-url-btn">複製網址</button>
+            </div>
+            <div id="share-copy-status"></div>
+            <div class="modal-buttons">
+                <button class="modal-btn" id="close-share-modal-btn">關閉</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

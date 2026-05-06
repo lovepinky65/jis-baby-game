@@ -1,0 +1,77 @@
+/* General Body Styles */
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+/* Main Container */
+.container {
+    max-width: 900px;
+    width: 90%;
+    padding: 2rem;
+}
+
+/* Header Styles */
+header {
+    margin-bottom: 3rem;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #1a2a4c;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Game Grid Layout */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+/* Game Card Styles */
+.game-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 150px;
+}
+
+.game-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.game-card h2 {
+    font-size: 1.8rem;
+    color: #1a2a4c;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.game-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 0;
+}
